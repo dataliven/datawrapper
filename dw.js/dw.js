@@ -933,7 +933,7 @@ dw.datasource.delimited = function(opts) {
 
 var DelimitedParser = function(opts) {
 
-    opts = _.extend(opts, {
+    opts = _.extend({
         delimiter: "auto",
         quoteChar: "\"",
         skipRows: 0,
@@ -941,7 +941,7 @@ var DelimitedParser = function(opts) {
         transpose: false,
         firstRowIsHeader: true,
         firstColumnIsHeader: true
-    });
+    }, opts);
 
     this.__delimiterPatterns = getDelimiterPatterns(opts.delimiter, opts.quoteChar);
     this.opts = opts;
