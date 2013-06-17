@@ -1,4 +1,30 @@
 
+/*
+ * NEW dataset model
+ */
+dw.dataset = function(options) {
+    _.extend(options, {
+        type: 'delimited'
+    });
+
+    // public interface
+    var dataset = {
+
+        fetch: function(callbacks) {
+            var me = this, opts = me.__options;
+
+            if (opts.type == "delimited") {
+                me._fetchDelimited(callbacks);
+            }
+        }
+
+    };
+    return dataset;
+};
+
+/*
+ * OLD dataset model
+ */
     // Datawrapper.Dataset
     // -------------------
 
