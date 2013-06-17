@@ -5,4 +5,4 @@
 //
 // dw.datasource.delimited(opts).dataset();
 //
-dw.datasources = {};
+dw.datasource = {};
