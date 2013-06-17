@@ -6,7 +6,7 @@ VERSION=$(python -c 'import json;print json.loads(open("../package.json").read()
 rm ../www/static/js/dw*.js
 
 # generate js that's packed with each chart
-cat src/dw.start.js src/dw.dataset.js src/dw.column.js src/dw.column.types.js src/dw.chart.js src/dw.chart.editable.js src/dw.theme.js src/dw.parsers.delimited.js src/dw.visualization.js src/dw.end.js > dw.js
+cat src/dw.start.js src/dw.dataset.js src/dw.column.js src/dw.column.types.js src/dw.datasource.js src/dw.datasource.delimited.js src/dw.chart.js src/dw.chart.editable.js src/dw.theme.js src/dw.parsers.delimited.js src/dw.visualization.js src/dw.end.js > dw.js
 cp dw.js ../www/static/js/
 uglifyjs dw.js > ../www/static/js/dw.min.js
 
