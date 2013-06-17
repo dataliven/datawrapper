@@ -1,11 +1,9 @@
 
-root._ = require 'underscore'
+_ = require 'underscore'
 vows = require 'vows'
 assert = require 'assert'
 
-root.dw = {}
-require '../src/dw.column.js'
-require '../src/dw.column.types.js'
+dw = require '../dw.js'
 
 
 vows

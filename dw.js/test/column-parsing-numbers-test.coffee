@@ -1,11 +1,8 @@
 
-root._ = require 'underscore'
+_ = require 'underscore'
 vows = require 'vows'
 assert = require 'assert'
-
-root.dw = {}
-require '../src/dw.column.js'
-require '../src/dw.column.types.js'
+dw = require '../dw.js'
 
 
 formats =
@@ -22,7 +19,9 @@ formats =
 
 
 batch = {}
+
 for k of formats
+
     batch[k] =
         'topic': dw.column 'name', formats[k]
         'type number': (topic) -> assert.equal topic.type(), 'number'
