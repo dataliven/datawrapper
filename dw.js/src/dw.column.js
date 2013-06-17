@@ -1,10 +1,9 @@
 
-
 /*
  * DataColumn abstracts the functionality of each column
  * of a dataset. A column has a type (text|number|date).
  */
-dw.column = function(label, rows, type) {
+dw.column = function(name, rows, type) {
 
     function guessType() {
 
@@ -35,12 +34,20 @@ dw.column = function(label, rows, type) {
 
     type = type ? dw.column.types[type](rows.slice(0, 50)) : guessType();
 
-    var range;
+    var range,
+        total,
+        origRows = rows.slice(0);
 
     // public interface
     var column = {
         // column label
-        label: function() { return label; },
+        name: function() {
+            if (arguments.length) {
+                name = arguments[0];
+                return column;
+            }
+            return name;
+        },
         // number of rows
         length: rows.length,
         // column.val(i) .. returns ith row of the col, parsed
@@ -71,6 +78,38 @@ dw.column = function(label, rows, type) {
                 range[1] = type.fromNum(range[1]);
             }
             return range;
+        },
+        // sum of values
+        total: function() {
+            if (!type.toNum) return false;
+            if (!total) {
+                total = 0;
+                column.each(function(v) {
+                    total += type.toNum(v);
+                });
+                total = type.fromNum(total);
+            }
+            return total;
+        },
+        // remove rows from column, keep those whose index
+        // is within @r
+        filterRows: function(r) {
+            rows = [];
+            if (arguments.length) {
+                _.each(r, function(i) {
+                    rows.push(origRows[i]);
+                });
+            } else {
+                rows = origRows.slice(0);
+            }
+            column.length = rows.length;
+            // invalidate range and total
+            range = total = false;
+            return column;
+        },
+
+        toString: function() {
+            return name + ' ('+type.name()+')';
         }
     };
     return column;
