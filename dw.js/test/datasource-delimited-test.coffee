@@ -17,7 +17,25 @@ vows
 
         'The tsv "women-in-parliament"':
             topic: dw.datasource.delimited
-                csv: 'Party	Women	Men	Total\nCDU/CSU	45	192	237\nSPD	57	89	146\nFDP	24	69	93\nLINKE	42	34	76\nGRÜNE	36	32	68\n'
+                csv: 'Party\tWomen\tMen\tTotal\nCDU/CSU\t45\t192\t237\nSPD\t57\t89\t146\nFDP\t24\t69\t93\nLINKE\t42\t34\t76\nGRÜNE\t36\t32\t68\n'
+
+            'when loaded as dataset':
+                topic: (src) ->
+                    src.dataset().done @callback
+                    return
+
+                'has four columns': (dataset, f) ->
+                    assert.equal dataset.numColumns(), 4
+
+                'has five rows': (dataset, f) ->
+                    assert.equal dataset.numRows(), 5
+
+                'has correct column types': (dataset, f) ->
+                    assert.deepEqual _.map(dataset.columns(), _types), ['text', 'number', 'number', 'number']
+
+        'A nasty tsv with new lines in quoted values':
+            topic: dw.datasource.delimited
+                csv: 'Party\t"Women\n\tfoo"\t"\"Men\""\t"Total"\n"CDU/CSU"\t45\t192\t237\n"SPD"\t57\t89\t146\n"FDP"\t24\t69\t93\n"LINKE"\t42\t34\t76\n"GRÜNE"\t36\t32\t68\n'
 
             'when loaded as dataset':
                 topic: (src) ->
